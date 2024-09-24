@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UK Tax Code Decoder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    h1 {
+      color: #333;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+    }
+    button {
+      padding: 10px;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+    #result {
+      margin-top: 30px;
+    }
+    .result-section {
+      margin-bottom: 20px;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>UK Tax Code Decoder</h1>
+  <p>Enter your UK tax code to see a breakdown of what it means.</p>
+
+  <input type="text" id="taxCodeInput" placeholder="e.g., 1257L">
+  <button onclick="decodeTaxCode()">Decode Tax Code</button>
+
+  <div id="result"></div>
+
+  <footer>
+    <p><small>Disclaimer: This tool is for informational purposes only and does not constitute professional tax advice.</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+    
