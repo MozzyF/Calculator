@@ -1,52 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>UK Tax Code Decoder</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-    }
-    h1 {
-      color: #333;
-    }
-    input[type="text"] {
-      padding: 10px;
-      font-size: 16px;
-      width: 250px;
-    }
-    button {
-      padding: 10px;
-      font-size: 16px;
-      margin-left: 10px;
-    }
-    #result {
-      margin-top: 30px;
-    }
-    .result-section {
-      margin-bottom: 20px;
-    }
-    .error {
-      color: red;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Salary Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <h1>UK Salary Calculator</h1>
+        <form id="salaryForm">
+            <label for="salary">Gross Salary (£):</label>
+            <input type="number" id="salary" name="salary" required><br>
 
-  <h1>UK Tax Code Decoder</h1>
-  <p>Enter your UK tax code to see a breakdown of what it means.</p>
+            <label for="frequency">Payment Frequency:</label>
+            <select id="frequency" name="frequency">
+                <option value="annual">Annual</option>
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+                <option value="hourly">Hourly</option>
+            </select><br>
 
-  <input type="text" id="taxCodeInput" placeholder="e.g., 1257L">
-  <button onclick="decodeTaxCode()">Decode Tax Code</button>
+            <label for="taxCode">Tax Code:</label>
+            <input type="text" id="taxCode" name="taxCode" value="1257L" required><br>
 
-  <div id="result"></div>
+            <label for="age">Age Group:</label>
+            <select id="age" name="age">
+                <option value="under65">Under 65</option>
+                <option value="65to74">65 to 74</option>
+                <option value="over74">Over 74</option>
+            </select><br>
 
-  <footer>
-    <p><small>Disclaimer: This tool is for informational purposes only and does not constitute professional tax advice.</small></p>
-  </footer>
+            <label for="pension">Pension Contribution (%):</label>
+            <input type="number" id="pension" name="pension" step="0.01" value="0"><br>
 
-  <script src="script.js"></script>
+            <label for="studentLoan">Student Loan Repayment Plan:</label>
+            <select id="studentLoan" name="studentLoan">
+                <option value="none">None</option>
+                <option value="plan1">Plan 1</option>
+                <option value="plan2">Plan 2</option>
+                <option value="plan4">Plan 4</option>
+                <option value="plan5">Plan 5</option>
+            </select><br>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div id="results">
+            <h2>Results:</h2>
+            <p>Net Salary: £<span id="netSalary">0</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
-    

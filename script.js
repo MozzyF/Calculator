@@ -1,104 +1,74 @@
-function decodeTaxCode() {
-    const taxCodeInput = document.getElementById('taxCodeInput');
-    const taxCode = taxCodeInput.value.trim().toUpperCase();
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = ''; // Clear previous results
-  
-    if (!taxCode) {
-      resultDiv.innerHTML = '<p class="error">Please enter a tax code.</p>';
-      return;
+document.getElementById('salaryForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const salary = parseFloat(document.getElementById('salary').value);
+    const frequency = document.getElementById('frequency').value;
+    const taxCode = document.getElementById('taxCode').value;
+    const age = document.getElementById('age').value;
+    const pension = parseFloat(document.getElementById('pension').value) || 0;
+    const studentLoan = document.getElementById('studentLoan').value;
+
+    // Basic logic for converting the salary based on frequency (e.g., if monthly, multiply by 12)
+    let annualSalary = salary;
+    if (frequency === 'monthly') {
+        annualSalary = salary * 12;
+    } else if (frequency === 'weekly') {
+        annualSalary = salary * 52;
+    } else if (frequency === 'hourly') {
+        annualSalary = salary * 2080; // Assuming a 40-hour workweek and 52 weeks/year
     }
-  
-    let numberPart = '';
-    let letterPart = '';
-  
-    // Check for special codes without numbers
-    const specialCodes = ['BR', 'D0', 'D1', 'NT', '0T'];
-    if (specialCodes.includes(taxCode)) {
-      letterPart = taxCode;
-    } else {
-      // Extract numbers and letters
-      const matches = taxCode.match(/^(\d+)([A-Z]+)$/i) || taxCode.match(/^([A-Z])(\d+)$/i);
-      if (matches) {
-        if (taxCode.startsWith('K')) {
-          letterPart = matches[1];
-          numberPart = matches[2];
+
+    // Subtract pension contributions from gross salary
+    const pensionDeduction = (pension / 100) * annualSalary;
+    const taxableIncome = annualSalary - pensionDeduction;
+
+    // Placeholder for actual tax, NICs, and student loan logic
+    const tax = calculateIncomeTax(taxableIncome, taxCode);
+    const nationalInsurance = calculateNIC(taxableIncome, age);
+    const studentLoanRepayment = calculateStudentLoanRepayment(taxableIncome, studentLoan);
+
+    const netSalary = taxableIncome - tax - nationalInsurance - studentLoanRepayment;
+
+    // Display the result
+    document.getElementById('netSalary').textContent = netSalary.toFixed(2);
+    document.getElementById('results').style.display = 'block';
+});
+
+function calculateIncomeTax(income, taxCode) {
+    // Placeholder logic for calculating income tax
+    const personalAllowance = 12570; // Default Personal Allowance for tax code 1257L
+    let taxable = income - personalAllowance;
+    let tax = 0;
+
+    if (taxable > 0) {
+        if (taxable <= 50270) {
+            tax = taxable * 0.2; // Basic rate 20%
+        } else if (taxable <= 150000) {
+            tax = (50270 * 0.2) + ((taxable - 50270) * 0.4); // Higher rate 40%
         } else {
-          numberPart = matches[1];
-          letterPart = matches[2];
+            tax = (50270 * 0.2) + ((150000 - 50270) * 0.4) + ((taxable - 150000) * 0.45); // Additional rate 45%
         }
-      } else {
-        resultDiv.innerHTML = '<p class="error">Invalid tax code format. Please check and try again.</p>';
-        return;
-      }
     }
-  
-    // Interpret the number part
-    let numberExplanation = '';
-    if (numberPart) {
-      const numberValue = parseInt(numberPart, 10);
-      if (letterPart === 'K') {
-        const additionalTaxableIncome = numberValue * 10;
-        numberExplanation = `<p>You have £${additionalTaxableIncome.toLocaleString()} of untaxed income added to your taxable income.</p>`;
-      } else {
-        const personalAllowance = numberValue * 10;
-        numberExplanation = `<p>Your Personal Allowance is £${personalAllowance.toLocaleString()}.</p>`;
-      }
-    } else {
-      numberExplanation = '<p>No Personal Allowance is allocated in your tax code.</p>';
+
+    return tax;
+}
+
+function calculateNIC(income, age) {
+    // Placeholder for NIC calculations based on age and thresholds
+    return income * 0.12; // Basic Class 1 NIC rate
+}
+
+function calculateStudentLoanRepayment(income, plan) {
+    // Placeholder for Student Loan repayment logic
+    if (plan === 'plan1') {
+        return income > 20195 ? (income - 20195) * 0.09 : 0;
+    } else if (plan === 'plan2') {
+        return income > 27295 ? (income - 27295) * 0.09 : 0;
+    } else if (plan === 'plan4') {
+        return income > 25000 ? (income - 25000) * 0.09 : 0;
+    } else if (plan === 'plan5') {
+        return income > 25000 ? (income - 25000) * 0.09 : 0;
     }
-  
-    // Interpret the letter part
-    let letterExplanation = '';
-    switch (letterPart) {
-      case 'L':
-        letterExplanation = '<p>L: Entitled to the standard tax-free Personal Allowance.</p>';
-        break;
-      case 'M':
-        letterExplanation = '<p>M: You have received 10% of your partner\'s Personal Allowance (Marriage Allowance recipient).</p>';
-        break;
-      case 'N':
-        letterExplanation = '<p>N: You have transferred 10% of your Personal Allowance to your partner (Marriage Allowance transferor).</p>';
-        break;
-      case 'T':
-        letterExplanation = '<p>T: Your tax code includes other calculations, often due to income over the Personal Allowance.</p>';
-        break;
-      case 'K':
-        letterExplanation = '<p>K: Indicates you have income that is not being taxed another way, such as company benefits.</p>';
-        break;
-      case 'BR':
-        letterExplanation = '<p>BR: All your income is taxed at the basic rate (20%).</p>';
-        break;
-      case 'D0':
-        letterExplanation = '<p>D0: All your income is taxed at the higher rate (40%).</p>';
-        break;
-      case 'D1':
-        letterExplanation = '<p>D1: All your income is taxed at the additional rate (45%).</p>';
-        break;
-      case '0T':
-        letterExplanation = '<p>0T: No Personal Allowance; all income is taxed at your marginal rate.</p>';
-        break;
-      case 'NT':
-        letterExplanation = '<p>NT: No tax is to be taken from your income or pension.</p>';
-        break;
-      default:
-        letterExplanation = `<p>${letterPart}: This is a special or unknown tax code letter. Please consult HMRC or your tax advisor for details.</p>`;
-        break;
-    }
-  
-    // Display the results
-    resultDiv.innerHTML = `
-      <div class="result-section">
-        <h2>Tax Code Entered: ${taxCode}</h2>
-      </div>
-      <div class="result-section">
-        <h3>Number Part</h3>
-        ${numberExplanation}
-      </div>
-      <div class="result-section">
-        <h3>Letter Part</h3>
-        ${letterExplanation}
-      </div>
-    `;
-  }
-  
+
+    return 0;
+}
