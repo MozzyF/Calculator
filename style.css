@@ -1,52 +1,138 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+/* Reset default styling */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-.container {
-    width: 50%;
-    margin: auto;
-    background: #fff;
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-h1, h2 {
+/* Main container styling */
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Page title */
+h1 {
     text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
 }
 
+/* Form styling */
 form {
-    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
 }
 
+/* Labels and Inputs */
 label {
-    display: block;
-    margin-top: 10px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 input, select {
-    width: 100%;
     padding: 10px;
-    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f8f8f8;
 }
 
+/* Button styling */
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: #fff;
+    background-color: #007bff;
+    color: white;
     border: none;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
+/* Results section */
 #results {
     margin-top: 20px;
     text-align: center;
     display: none;
+}
+
+/* Salary Breakdown Table */
+#breakdown {
+    margin-top: 20px;
+    display: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+table th {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    table th, table td {
+        padding: 8px;
+    }
 }

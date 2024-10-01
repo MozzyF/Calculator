@@ -1,74 +1,165 @@
-document.getElementById('salaryForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+// ==========================
+// Constants for Easy Updates
+// ==========================
+const TAX_BANDS = [
+    { limit: 12570, rate: 0 },        // Personal allowance (up to £12,570 is tax-free)
+    { limit: 50270, rate: 0.20 },     // Basic rate (up to £50,270 at 20%)
+    { limit: 150000, rate: 0.40 },    // Higher rate (up to £150,000 at 40%)
+    { limit: Infinity, rate: 0.45 }   // Additional rate (above £150,000 at 45%)
+];
 
-    const salary = parseFloat(document.getElementById('salary').value);
-    const frequency = document.getElementById('frequency').value;
-    const taxCode = document.getElementById('taxCode').value;
-    const age = document.getElementById('age').value;
-    const pension = parseFloat(document.getElementById('pension').value) || 0;
-    const studentLoan = document.getElementById('studentLoan').value;
+const NIC_BANDS = [
+    { limit: 12570, rate: 0 },        // No NICs up to personal allowance
+    { limit: 50270, rate: 0.12 },     // NICs from £12,570 to £50,270 at 12%
+    { limit: Infinity, rate: 0.02 }   // NICs above £50,270 at 2%
+];
 
-    // Basic logic for converting the salary based on frequency (e.g., if monthly, multiply by 12)
-    let annualSalary = salary;
-    if (frequency === 'monthly') {
-        annualSalary = salary * 12;
-    } else if (frequency === 'weekly') {
-        annualSalary = salary * 52;
-    } else if (frequency === 'hourly') {
-        annualSalary = salary * 2080; // Assuming a 40-hour workweek and 52 weeks/year
-    }
+const STUDENT_LOAN_THRESHOLDS = {
+    plan1: 20195,
+    plan2: 27295,
+    plan4: 25000,
+    plan5: 25000
+};
 
-    // Subtract pension contributions from gross salary
-    const pensionDeduction = (pension / 100) * annualSalary;
-    const taxableIncome = annualSalary - pensionDeduction;
+const STUDENT_LOAN_RATE = 0.09; // Fixed repayment rate for all plans
 
-    // Placeholder for actual tax, NICs, and student loan logic
-    const tax = calculateIncomeTax(taxableIncome, taxCode);
-    const nationalInsurance = calculateNIC(taxableIncome, age);
-    const studentLoanRepayment = calculateStudentLoanRepayment(taxableIncome, studentLoan);
+// ==========================
+// Helper Functions
+// ==========================
 
-    const netSalary = taxableIncome - tax - nationalInsurance - studentLoanRepayment;
-
-    // Display the result
-    document.getElementById('netSalary').textContent = netSalary.toFixed(2);
-    document.getElementById('results').style.display = 'block';
-});
-
-function calculateIncomeTax(income, taxCode) {
-    // Placeholder logic for calculating income tax
-    const personalAllowance = 12570; // Default Personal Allowance for tax code 1257L
-    let taxable = income - personalAllowance;
+// Function to calculate income tax
+function calculateIncomeTax(income) {
     let tax = 0;
+    let remainingIncome = income;
 
-    if (taxable > 0) {
-        if (taxable <= 50270) {
-            tax = taxable * 0.2; // Basic rate 20%
-        } else if (taxable <= 150000) {
-            tax = (50270 * 0.2) + ((taxable - 50270) * 0.4); // Higher rate 40%
+    // Loop through tax bands and apply the rates
+    for (let band of TAX_BANDS) {
+        if (remainingIncome > band.limit) {
+            const taxableAmount = band.limit;
+            tax += taxableAmount * band.rate;
+            remainingIncome -= taxableAmount;
         } else {
-            tax = (50270 * 0.2) + ((150000 - 50270) * 0.4) + ((taxable - 150000) * 0.45); // Additional rate 45%
+            tax += remainingIncome * band.rate;
+            break;
         }
     }
 
     return tax;
 }
 
-function calculateNIC(income, age) {
-    // Placeholder for NIC calculations based on age and thresholds
-    return income * 0.12; // Basic Class 1 NIC rate
-}
+// Function to calculate National Insurance Contributions (NICs)
+function calculateNIC(income) {
+    let nic = 0;
+    let remainingIncome = income;
 
-function calculateStudentLoanRepayment(income, plan) {
-    // Placeholder for Student Loan repayment logic
-    if (plan === 'plan1') {
-        return income > 20195 ? (income - 20195) * 0.09 : 0;
-    } else if (plan === 'plan2') {
-        return income > 27295 ? (income - 27295) * 0.09 : 0;
-    } else if (plan === 'plan4') {
-        return income > 25000 ? (income - 25000) * 0.09 : 0;
-    } else if (plan === 'plan5') {
-        return income > 25000 ? (income - 25000) * 0.09 : 0;
+    // Loop through NIC bands and apply the rates
+    for (let band of NIC_BANDS) {
+        if (remainingIncome > band.limit) {
+            const nicAmount = band.limit;
+            nic += nicAmount * band.rate;
+            remainingIncome -= nicAmount;
+        } else {
+            nic += remainingIncome * band.rate;
+            break;
+        }
     }
 
-    return 0;
+    return nic;
 }
+
+// Function to calculate student loan repayment
+function calculateStudentLoanRepayment(income, plan) {
+    const threshold = STUDENT_LOAN_THRESHOLDS[plan];
+    return income > threshold ? (income - threshold) * STUDENT_LOAN_RATE : 0;
+}
+
+// Function to format numbers as currency (GBP)
+function formatCurrency(num) {
+    return num.toLocaleString('en-GB', { style: 'currency', currency: 'GBP' });
+}
+
+// ==========================
+// Main Calculation Logic
+// ==========================
+
+document.getElementById('salaryForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Gather form inputs
+    const salary = parseFloat(document.getElementById('salary').value);
+    const frequency = document.getElementById('frequency').value;
+    const pensionType = document.getElementById('pensionType').value;
+    const pensionPercent = parseFloat(document.getElementById('pensionPercent').value) || 0;
+    const pensionFlatAmount = parseFloat(document.getElementById('pensionFlatAmount').value) || 0;
+    const studentLoanPlan = document.getElementById('studentLoan').value;
+
+    // Convert salary to annual if needed
+    let annualSalary = salary;
+    if (frequency === 'monthly') {
+        annualSalary *= 12;
+    } else if (frequency === 'weekly') {
+        annualSalary *= 52;
+    } else if (frequency === 'hourly') {
+        annualSalary *= 2080; // Assume 40-hour workweek and 52 weeks/year
+    }
+
+    // Calculate pension deduction
+    let pensionDeduction = 0;
+    if (pensionType === 'percent') {
+        pensionDeduction = (pensionPercent / 100) * annualSalary;
+    } else {
+        pensionDeduction = pensionFlatAmount;
+    }
+
+    const taxableIncome = annualSalary - pensionDeduction;
+
+    // Calculate taxes
+    const incomeTax = calculateIncomeTax(taxableIncome);
+    const nationalInsurance = calculateNIC(taxableIncome);
+    const studentLoanRepayment = calculateStudentLoanRepayment(taxableIncome, studentLoanPlan);
+
+    const netSalary = taxableIncome - incomeTax - nationalInsurance - studentLoanRepayment;
+
+    // Monthly and weekly breakdowns
+    const monthlySalary = annualSalary / 12;
+    const weeklySalary = annualSalary / 52;
+
+    const monthlyTax = incomeTax / 12;
+    const weeklyTax = incomeTax / 52;
+
+    const monthlyNIC = nationalInsurance / 12;
+    const weeklyNIC = nationalInsurance / 52;
+
+    const monthlyNet = netSalary / 12;
+    const weeklyNet = netSalary / 52;
+
+    const monthlyPension = pensionDeduction / 12;
+    const weeklyPension = pensionDeduction / 52;
+
+    // Update the results in the HTML
+    document.getElementById('netSalary').textContent = formatCurrency(netSalary);
+
+    // Update Breakdown Table
+    document.getElementById('annualGross').textContent = formatCurrency(annualSalary);
+    document.getElementById('monthlyGross').textContent = formatCurrency(monthlySalary);
+    document.getElementById('weeklyGross').textContent = formatCurrency(weeklySalary);
+
+    document.getElementById('annualTax').textContent = formatCurrency(incomeTax);
+    document.getElementById('monthlyTax').textContent = formatCurrency(monthlyTax);
+    document.getElementById('weeklyTax').textContent = formatCurrency(weeklyTax);
+
+    document.getElementById('annualNIC').textContent = formatCurrency(nationalInsurance);
+    document.getElementById('monthlyNIC').textContent = formatCurrency(monthlyNIC);
+    document.getElementById('weeklyNIC').textContent = formatCurrency(weeklyNIC);
+
+    document.getElementById('annualPension').textContent = formatCurrency(pensionDeduction);
+    document.getElementById('monthlyPension').textContent = formatCurrency(monthlyPension);
+    document.getElementById('weeklyPension').textContent = formatCurrency(weeklyPension);
+
+    document.getElementById('annualNet').textContent = formatCurrency(netSalary);
+    document.getElementById('monthlyNet').textContent = formatCurrency(monthlyNet);
+    document.getElementById('weeklyNet').textContent = formatCurrency(weeklyNet);
+
+    // Show the breakdown table
+    document.getElementById('breakdown').style.display = 'block';
+});

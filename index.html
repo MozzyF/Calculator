@@ -11,7 +11,7 @@
         <h1>UK Salary Calculator</h1>
         <form id="salaryForm">
             <label for="salary">Gross Salary (£):</label>
-            <input type="number" id="salary" name="salary" required><br>
+            <input type="number" id="salary" name="salary" required>
 
             <label for="frequency">Payment Frequency:</label>
             <select id="frequency" name="frequency">
@@ -19,20 +19,17 @@
                 <option value="monthly">Monthly</option>
                 <option value="weekly">Weekly</option>
                 <option value="hourly">Hourly</option>
-            </select><br>
+            </select>
 
             <label for="taxCode">Tax Code:</label>
-            <input type="text" id="taxCode" name="taxCode" value="1257L" required><br>
+            <input type="text" id="taxCode" name="taxCode" value="1257L" required>
 
             <label for="age">Age Group:</label>
             <select id="age" name="age">
                 <option value="under65">Under 65</option>
                 <option value="65to74">65 to 74</option>
                 <option value="over74">Over 74</option>
-            </select><br>
-
-            <label for="pension">Pension Contribution (%):</label>
-            <input type="number" id="pension" name="pension" step="0.01" value="0"><br>
+            </select>
 
             <label for="studentLoan">Student Loan Repayment Plan:</label>
             <select id="studentLoan" name="studentLoan">
@@ -41,14 +38,82 @@
                 <option value="plan2">Plan 2</option>
                 <option value="plan4">Plan 4</option>
                 <option value="plan5">Plan 5</option>
-            </select><br>
+            </select>
+
+            <!-- Pension Type and Input Section -->
+            <label for="pensionType">Pension Contribution Type:</label>
+            <select id="pensionType" name="pensionType" required>
+                <option value="percent">Percentage of Gross Salary</option>
+                <option value="flatAnnual">Flat Amount (Annual)</option>
+                <option value="flatMonthly">Flat Amount (Monthly)</option>
+                <option value="flatWeekly">Flat Amount (Weekly)</option>
+            </select>
+
+            <!-- Input for percentage contribution -->
+            <div id="pensionPercentInput">
+                <label for="pensionPercent">Pension Contribution (%):</label>
+                <input type="number" id="pensionPercent" name="pensionPercent" step="0.01" value="0">
+            </div>
+
+            <!-- Input for flat amount contribution -->
+            <div id="pensionFlatInput" style="display: none;">
+                <label for="pensionFlatAmount">Pension Contribution (Flat £):</label>
+                <input type="number" id="pensionFlatAmount" name="pensionFlatAmount" step="0.01" value="0">
+            </div>
 
             <button type="submit">Calculate</button>
         </form>
 
         <div id="results">
             <h2>Results:</h2>
-            <p>Net Salary: £<span id="netSalary">0</span></p>
+            <p>Net Salary: <span id="netSalary">0</span></p>
+        </div>
+
+        <!-- Salary Breakdown Table -->
+        <div id="breakdown" style="display:none;">
+            <h2>Salary Breakdown</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Annually</th>
+                        <th>Monthly</th>
+                        <th>Weekly</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gross Salary</td>
+                        <td><span id="annualGross">0</span></td>
+                        <td><span id="monthlyGross">0</span></td>
+                        <td><span id="weeklyGross">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Income Tax</td>
+                        <td><span id="annualTax">0</span></td>
+                        <td><span id="monthlyTax">0</span></td>
+                        <td><span id="weeklyTax">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>National Insurance</td>
+                        <td><span id="annualNIC">0</span></td>
+                        <td><span id="monthlyNIC">0</span></td>
+                        <td><span id="weeklyNIC">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pension Contribution</td>
+                        <td><span id="annualPension">0</span></td>
+                        <td><span id="monthlyPension">0</span></td>
+                        <td><span id="weeklyPension">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Net Salary</td>
+                        <td><span id="annualNet">0</span></td>
+                        <td><span id="monthlyNet">0</span></td>
+                        <td><span id="weeklyNet">0</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
