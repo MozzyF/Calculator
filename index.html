@@ -11,7 +11,7 @@
         <h1>UK Salary Calculator</h1>
         <form id="salaryForm">
             <label for="salary">Gross Salary (£):</label>
-            <input type="number" id="salary" name="salary" required>
+            <input type="text" id="salary" name="salary" required>
 
             <label for="frequency">Payment Frequency:</label>
             <select id="frequency" name="frequency">
@@ -51,17 +51,17 @@
 
             <!-- Input for percentage contribution -->
             <div id="pensionPercentInput">
-                <label for="pensionPercent">Pension Contribution (%):</label>
+                <label id="pensionLabel" for="pensionPercent">Pension Contribution (%):</label>
                 <input type="number" id="pensionPercent" name="pensionPercent" step="0.01" value="0">
             </div>
 
             <!-- Input for flat amount contribution -->
             <div id="pensionFlatInput" style="display: none;">
-                <label for="pensionFlatAmount">Pension Contribution (Flat £):</label>
+                <label for="pensionFlatAmount">Pension Contribution (£):</label>
                 <input type="number" id="pensionFlatAmount" name="pensionFlatAmount" step="0.01" value="0">
             </div>
 
-            <button type="submit">Calculate</button>
+            <button type="button" id="calculateButton">Calculate</button>
         </form>
 
         <div id="results">
@@ -72,7 +72,7 @@
         <!-- Salary Breakdown Table -->
         <div id="breakdown" style="display:none;">
             <h2>Salary Breakdown</h2>
-            <table>
+            <table id="resultsTable">
                 <thead>
                     <tr>
                         <th></th>
@@ -105,6 +105,13 @@
                         <td><span id="annualPension">0</span></td>
                         <td><span id="monthlyPension">0</span></td>
                         <td><span id="weeklyPension">0</span></td>
+                    </tr>
+                    <!-- Move Student Loan Repayment row above Net Salary -->
+                    <tr>
+                        <td>Student Loan Repayment (Plan: <span id="selectedPlan">None</span>)</td>
+                        <td><span id="annualStudentLoan">0</span></td>
+                        <td><span id="monthlyStudentLoan">0</span></td>
+                        <td><span id="weeklyStudentLoan">0</span></td>
                     </tr>
                     <tr>
                         <td>Net Salary</td>

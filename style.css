@@ -7,35 +7,40 @@
 
 /* Body styling */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0; /* Light grey background */
     color: #333;
     line-height: 1.6;
     padding: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Align items to the top */
     min-height: 100vh;
 }
 
 /* Main container styling */
 .container {
     background-color: #ffffff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #e0e0e0;
     padding: 30px;
     max-width: 800px;
     width: 100%;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin-right: 20px; /* Add some space between the container and the cat image */
+    /* Remove the transition for transform */
+    /* transition: transform 0.3s ease; */
 }
 
 /* Page title */
 h1 {
     text-align: center;
     margin-bottom: 20px;
-    color: #007bff;
+    color: #2e7d32; /* Dark green for title */
+    font-size: 2rem;
 }
 
 /* Form styling */
@@ -44,7 +49,7 @@ form {
     flex-direction: column;
     gap: 15px;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #f1f8f4; /* Very light green */
     border-radius: 8px;
     border: 1px solid #ddd;
 }
@@ -53,30 +58,38 @@ form {
 label {
     font-weight: bold;
     margin-bottom: 5px;
+    color: #555;
 }
 
 input, select {
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1rem;
-    background-color: #f8f8f8;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #2e7d32; /* Dark green focus */
+    outline: none;
 }
 
 /* Button styling */
 button {
-    background-color: #007bff;
-    color: white;
+    background-color: #00796b; /* Teal button */
+    color: #fff;
     border: none;
     padding: 12px;
     font-size: 1rem;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #004d40; /* Darker teal on hover */
+    transform: translateY(-2px);
 }
 
 /* Results section */
@@ -99,8 +112,8 @@ table {
 }
 
 thead {
-    background-color: #007bff;
-    color: white;
+    background-color: #00796b; /* Teal table header */
+    color: #ffffff; /* White text for contrast */
 }
 
 th, td {
@@ -110,11 +123,12 @@ th, td {
 }
 
 td {
-    background-color: #f9f9f9;
+    background-color: #ffffff; /* White table cells */
+    color: #333; /* Dark text for contrast */
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f1f1f1;
+    background-color: #f0f0f0; /* Light grey for alternate rows */
 }
 
 table th {
@@ -135,4 +149,16 @@ table th {
     table th, table td {
         padding: 8px;
     }
+}
+
+.cat-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cat-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Optional: add rounded corners */
 }
