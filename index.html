@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Salary Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Navigation</h2>
+        <a href="#" onclick="showCalculator('uk-salary-calculator')" id="uk-salary-link">UK Salary Calculator</a>
+        <a href="#" onclick="showCalculator('extra-salary-calculator')" id="extra-salary-link">Extra Gross Salary Calculator</a>
+        <a href="#" onclick="showCalculator('compare-salary-calculator')" id="compare-salary-link">Compare Two Salaries</a>
+    </div>
+    <div class="main-content">
+        <div id="uk-salary-calculator" class="calculator active">
+            <div class="container">
+                <h1>UK Salary Calculator</h1>
+                <form id="salaryForm">
+                    <label for="salary">Gross Salary (£):</label>
+                    <input type="text" id="salary" name="salary" required>
+
+                    <label for="frequency">Payment Frequency:</label>
+                    <select id="frequency" name="frequency">
+                        <option value="annual">Annual</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="hourly">Hourly</option>
+                    </select>
+
+                    <label for="taxCode">Tax Code:</label>
+                    <input type="text" id="taxCode" name="taxCode" value="1257L" required>
+
+                    <label for="age">Age Group:</label>
+                    <select id="age" name="age">
+                        <option value="under65">Under 65</option>
+                        <option value="65to74">65 to 74</option>
+                        <option value="over74">Over 74</option>
+                    </select>
+
+                    <label for="studentLoan">Student Loan Repayment Plan:</label>
+                    <select id="studentLoan" name="studentLoan">
+                        <option value="none">None</option>
+                        <option value="plan1">Plan 1</option>
+                        <option value="plan2">Plan 2</option>
+                        <option value="plan4">Plan 4</option>
+                        <option value="plan5">Plan 5</option>
+                    </select>
+
+                    <!-- Pension Type and Input Section -->
+                    <label for="pensionType">Pension Contribution Type:</label>
+                    <select id="pensionType" name="pensionType" required>
+                        <option value="percent">Percentage of Gross Salary</option>
+                        <option value="flatAnnual">Flat Amount (Annual)</option>
+                        <option value="flatMonthly">Flat Amount (Monthly)</option>
+                        <option value="flatWeekly">Flat Amount (Weekly)</option>
+                    </select>
+
+                    <!-- Input for percentage contribution -->
+                    <div id="pensionPercentInput">
+                        <label id="pensionLabel" for="pensionPercent">Pension Contribution (%):</label>
+                        <input type="number" id="pensionPercent" name="pensionPercent" step="0.01" value="0">
+                    </div>
+
+                    <!-- Input for flat amount contribution -->
+                    <div id="pensionFlatInput" style="display: none;">
+                        <label for="pensionFlatAmount">Pension Contribution (£):</label>
+                        <input type="number" id="pensionFlatAmount" name="pensionFlatAmount" step="0.01" value="0">
+                    </div>
+
+                    <button type="button" id="calculateButton">Calculate</button>
+                </form>
+
+                <div id="results">
+                    <h2>Results:</h2>
+                    <p>Net Salary: <span id="netSalary">0</span></p>
+                </div>
+
+                <!-- Salary Breakdown Table -->
+                <div id="breakdown" style="display:none;">
+                    <h2>Salary Breakdown</h2>
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Annually</th>
+                                <th>Monthly</th>
+                                <th>Weekly</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gross Salary</td>
+                                <td><span id="annualGross">0</span> <span id="annualGrossDiff" class="diff"></span></td>
+                                <td><span id="monthlyGross">0</span> <span id="monthlyGrossDiff" class="diff"></span></td>
+                                <td><span id="weeklyGross">0</span> <span id="weeklyGrossDiff" class="diff"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Income Tax</td>
+                                <td><span id="annualTax">0</span> <span id="annualTaxDiff" class="diff"></span></td>
+                                <td><span id="monthlyTax">0</span> <span id="monthlyTaxDiff" class="diff"></span></td>
+                                <td><span id="weeklyTax">0</span> <span id="weeklyTaxDiff" class="diff"></span></td>
+                            </tr>
+                            <tr>
+                                <td>National Insurance</td>
+                                <td><span id="annualNIC">0</span> <span id="annualNICDiff" class="diff"></span></td>
+                                <td><span id="monthlyNIC">0</span> <span id="monthlyNICDiff" class="diff"></span></td>
+                                <td><span id="weeklyNIC">0</span> <span id="weeklyNICDiff" class="diff"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Pension Contribution</td>
+                                <td><span id="annualPension">0</span></td>
+                                <td><span id="monthlyPension">0</span></td>
+                                <td><span id="weeklyPension">0</span></td>
+                            </tr>
+                            <!-- Move Student Loan Repayment row above Net Salary -->
+                            <tr>
+                                <td>Student Loan Repayment (Plan: <span id="selectedPlan">None</span>)</td>
+                                <td><span id="annualStudentLoan">0</span> <span id="annualStudentLoanDiff" class="diff"></span></td>
+                                <td><span id="monthlyStudentLoan">0</span> <span id="monthlyStudentLoanDiff" class="diff"></span></td>
+                                <td><span id="weeklyStudentLoan">0</span> <span id="weeklyStudentLoanDiff" class="diff"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Net Salary</td>
+                                <td><span id="annualNet">0</span> <span id="annualNetDiff" class="diff"></span></td>
+                                <td><span id="monthlyNet">0</span> <span id="monthlyNetDiff" class="diff"></span></td>
+                                <td><span id="weeklyNet">0</span> <span id="weeklyNetDiff" class="diff"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="extra-salary-calculator" class="calculator">
+            <div class="container">
+                <h1>Extra Gross Salary Calculator</h1>
+                <form id="extraSalaryForm">
+                    <label for="desiredNetIncome">Desired Extra Net Income (£):</label>
+                    <input type="number" id="desiredNetIncome" name="desiredNetIncome" required>
+
+                    <label for="extraFrequency">Frequency:</label>
+                    <select id="extraFrequency" name="extraFrequency">
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                        <option value="weekly">Weekly</option>
+                    </select>
+
+                    <button type="button" id="calculateExtraButton">Calculate Extra Salary</button>
+                </form>
+
+                <div id="extraResult">
+                    <h2>Extra Gross Salary Needed:</h2>
+                    <p><span id="extraGrossSalary">Here will show how much extra gross salary you need to earn to achieve a desired net increase per month.</span></p>
+                </div>
+
+                <!-- Debug Table for Detailed Breakdown -->
+                <div id="debugTable">
+                    <h2>Calculation Breakdown</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Current (£)</th>
+                                <th>Target (£)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gross Salary</td>
+                                <td id="debugCurrentGross">0</td>
+                                <td id="debugTargetGross">0</td>
+                            </tr>
+                            <tr>
+                                <td>Income Tax</td>
+                                <td id="debugCurrentIncomeTax">0</td>
+                                <td id="debugTargetIncomeTax">0</td>
+                            </tr>
+                            <tr>
+                                <td>National Insurance</td>
+                                <td id="debugCurrentNIC">0</td>
+                                <td id="debugTargetNIC">0</td>
+                            </tr>
+                            <tr>
+                                <td>Student Loan Repayment</td>
+                                <td id="debugCurrentStudentLoan">0</td>
+                                <td id="debugTargetStudentLoan">0</td>
+                            </tr>
+                            <tr>
+                                <td>Net Income</td>
+                                <td id="debugCurrentNetIncome">0</td>
+                                <td id="debugTargetNetIncome">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="compare-salary-calculator" class="calculator">
+            <div class="container">
+                <h1>Compare Two Salaries</h1>
+                <form id="compareSalaryForm">
+                    <label for="salary1">First Gross Salary (£):</label>
+                    <input type="number" id="salary1" name="salary1" required>
+
+                    <label for="salary2">Second Gross Salary (£):</label>
+                    <input type="number" id="salary2" name="salary2" required>
+
+                    <button type="button" id="compareButton">Compare Salaries</button>
+                </form>
+
+                <div id="compareResults" style="display: none;">
+                    <h2>Comparison Results:</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Salary 1 (£)</th>
+                                <th>Salary 2 (£)</th>
+                                <th>Difference (£)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gross Salary</td>
+                                <td id="grossSalary1">0</td>
+                                <td id="grossSalary2">0</td>
+                                <td id="grossSalaryDiff">0</td>
+                            </tr>
+                            <tr>
+                                <td>Income Tax</td>
+                                <td id="incomeTax1">0</td>
+                                <td id="incomeTax2">0</td>
+                                <td id="incomeTaxDiff">0</td>
+                            </tr>
+                            <tr>
+                                <td>National Insurance</td>
+                                <td id="nationalInsurance1">0</td>
+                                <td id="nationalInsurance2">0</td>
+                                <td id="nationalInsuranceDiff">0</td>
+                            </tr>
+                            <tr>
+                                <td>Net Salary</td>
+                                <td id="netSalary1">0</td>
+                                <td id="netSalary2">0</td>
+                                <td id="netSalaryDiff">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

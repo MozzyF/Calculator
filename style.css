@@ -1,0 +1,295 @@
+/* Reset default styling for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling for the entire page */
+body {
+    display: flex;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* Sidebar styling for navigation */
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 15px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+/* Sidebar heading styling */
+.sidebar h2 {
+    margin-bottom: 15px;
+    color: #2e7d32;
+}
+
+/* Sidebar link styling */
+.sidebar a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 5px;
+    border-radius: 4px; /* Consistent rounded corners */
+}
+
+/* Hover and active state for sidebar links */
+.sidebar a:hover, .sidebar a.active {
+    background-color: #ddd;
+}
+
+/* Main content area styling */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 1200px; /* Set a maximum width */
+    margin: 0; /* Remove auto-centering */
+}
+
+/* Calculator sections hidden by default */
+.calculator {
+    display: none;
+}
+
+/* Active calculator section displayed */
+.calculator.active {
+    display: block;
+}
+
+/* Common container styling for sections */
+.container {
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Consistent rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Space between sections */
+}
+
+/* Main heading styling */
+h1 {
+    font-size: 2rem; /* Larger size for main headings */
+    color: #2e7d32; /* Consistent heading color */
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold; /* Consistent font weight */
+    margin-bottom: 20px;
+}
+
+/* Subheading styling */
+h2, h3 {
+    font-size: 1.5rem; /* Smaller size for subheadings */
+    color: #2e7d32; /* Consistent heading color */
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold; /* Consistent font weight */
+    margin-bottom: 20px;
+}
+
+/* Form styling for input forms */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f1f8f4; /* Very light green */
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Label and paragraph text styling */
+label, p {
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Input and select element styling */
+input, select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+/* Focus state for input and select elements */
+input:focus, select:focus {
+    border-color: #2e7d32; /* Dark green focus */
+    outline: none;
+}
+
+/* Button styling */
+button {
+    background-color: #00796b; /* Teal button */
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover state for buttons */
+button:hover {
+    background-color: #004d40; /* Darker teal on hover */
+    transform: translateY(-2px);
+}
+
+/* Results section styling */
+#results {
+    margin-top: 20px;
+    text-align: center;
+    display: none;
+}
+
+/* Salary Breakdown Table styling */
+#breakdown {
+    margin-top: 20px;
+    display: none;
+}
+
+/* Table styling for data presentation */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Table header styling */
+thead {
+    background-color: #00796b; /* Teal table header */
+    color: #ffffff; /* White text for contrast */
+}
+
+/* Table cell styling */
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Table row styling for alternate rows */
+tbody tr:nth-child(even) {
+    background-color: #f0f0f0; /* Light grey for alternate rows */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    table th, table td {
+        padding: 8px;
+    }
+}
+
+/* Cat image styling */
+.cat-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Cat image styling with optional rounded corners */
+.cat-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Optional: add rounded corners */
+}
+
+/* Specific styling for salary calculator */
+#salary-calculator {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 300px;
+    float: right;
+    margin: 20px;
+}
+
+/* Heading styling for salary calculator */
+#salary-calculator h2 {
+    margin-top: 0;
+}
+
+/* Form element styling for salary calculator */
+#salary-calculator label, #salary-calculator input, #salary-calculator select, #salary-calculator button {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* Removed empty ruleset for #extra-salary-calculator */
+
+/* Debug table styling for detailed breakdown */
+#debugTable table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#debugTable th, #debugTable td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#debugTable thead {
+    background-color: #00796b; /* Teal table header */
+    color: #ffffff; /* White text for contrast */
+}
+
+#debugTable tbody tr:nth-child(even) {
+    background-color: #f0f0f0; /* Light grey for alternate rows */
+}
+
+/* Styling for differences in values */
+.diff {
+    font-size: 0.8rem;
+    color: green; /* Default color for positive changes */
+    margin-left: 5px;
+}
+
+.diff.negative {
+    color: red; /* Color for negative changes */
+}
+
+/* Section for increase required */
+#increaseRequiredSection {
+    margin-top: 20px;
+    text-align: center;
+    display: none;
+}
+
+/* Extra Gross Salary Needed section styling */
+#extra-salary-needed {
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Consistent rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Space between sections */
+    /* Ensure it uses the common container styling */
+    width: 100%; /* Ensure it takes full width of its container */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+#extraResult {
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Consistent rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Space above the section */
+    margin-bottom: 20px; /* Space below the section */
+}
