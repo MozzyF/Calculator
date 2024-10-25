@@ -563,3 +563,58 @@ function updateResults(component, value1, value2) {
     document.getElementById(`${component}2`).textContent = value2.toFixed(2);
     document.getElementById(`${component}Diff`).textContent = (value1 - value2).toFixed(2);
 }
+
+// Function to handle Enter key press in the first salary input
+document.getElementById('salary1').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        // Prevent default form submission
+        event.preventDefault();
+        // Move focus to the second salary input
+        document.getElementById('salary2').focus();
+    }
+});
+
+// Function to handle Enter key press in the second salary input
+document.getElementById('salary2').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        // Prevent default form submission
+        event.preventDefault();
+        // Trigger the calculation
+        document.getElementById('compareButton').click();
+    }
+});
+
+document.getElementById('calculateMortgageButton').addEventListener('click', function() {
+    const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+    const annualInterestRate = parseFloat(document.getElementById('interestRate').value) / 100;
+    const loanTerm = parseInt(document.getElementById('loanTerm').value);
+
+    const monthlyInterestRate = annualInterestRate / 12;
+    const numberOfPayments = loanTerm * 12;
+
+    // Calculate monthly payment using the formula
+    const monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+
+    // Clear previous results
+    const amortizationSchedule = document.getElementById('amortizationSchedule');
+    amortizationSchedule.innerHTML = '';
+
+    let remainingBalance = loanAmount;
+
+    for (let i = 1; i <= numberOfPayments; i++) {
+        const interestPayment = remainingBalance * monthlyInterestRate;
+        const principalPayment = monthlyPayment - interestPayment;
+        remainingBalance -= principalPayment;
+
+        // Create a new row for the amortization schedule
+        const row = amortizationSchedule.insertRow();
+        row.insertCell(0).textContent = i; // Payment Number
+        row.insertCell(1).textContent = monthlyPayment.toFixed(2); // Payment
+        row.insertCell(2).textContent = principalPayment.toFixed(2); // Principal
+        row.insertCell(3).textContent = interestPayment.toFixed(2); // Interest
+        row.insertCell(4).textContent = remainingBalance.toFixed(2); // Remaining Balance
+    }
+
+    // Show results
+    document.getElementById('mortgageResults').style.display = 'block';
+});

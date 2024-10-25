@@ -293,3 +293,54 @@ tbody tr:nth-child(even) {
     margin-top: 20px; /* Space above the section */
     margin-bottom: 20px; /* Space below the section */
 }
+
+/* Add styles for the mortgage calculator */
+#mortgage-calculator {
+    margin-top: 20px;
+}
+
+#mortgage-calculator h1 {
+    text-align: center;
+}
+
+#mortgage-calculator form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#mortgage-calculator label {
+    margin: 10px 0 5px;
+}
+
+#mortgage-calculator input {
+    width: 200px;
+    padding: 8px;
+    margin-bottom: 15px;
+}
+
+#mortgageResults {
+    margin-top: 20px;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #00796b; /* Teal table header */
+    color: #ffffff; /* White text for contrast */
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f0f0f0; /* Light grey for alternate rows */
+}
