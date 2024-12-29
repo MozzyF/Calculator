@@ -649,20 +649,3 @@ interestRateInput.addEventListener('keydown', function(event) {
 loanTermInput.addEventListener('keydown', function(event) {
     handleEnterKey(event, null); // No next element, so pass null
 });
-
-// Function to format the loan amount input
-function formatLoanAmount() {
-    const loanAmountInput = document.getElementById('loanAmount');
-    let value = loanAmountInput.value.replace(/,/g, ''); // Remove existing commas
-    if (!isNaN(value) && value.trim() !== '') {
-        loanAmountInput.value = formatNumberWithCommas(parseFloat(value));
-    }
-}
-
-// Event listener for formatting loan amount on blur
-document.getElementById('loanAmount').addEventListener('blur', formatLoanAmount);
-
-// Helper function to format numbers with commas
-function formatNumberWithCommas(value) {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
