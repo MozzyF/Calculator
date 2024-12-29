@@ -95,7 +95,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    padding: 20px;
+    padding: 20px; /* Padding around the entire form */
     background-color: #f1f8f4; /* Very light green */
     border-radius: 8px;
     border: 1px solid #ddd;
@@ -115,6 +115,8 @@ input, select {
     font-size: 1rem;
     background-color: #fff;
     transition: border-color 0.3s ease;
+    width: 100%; /* Ensure inputs take full width */
+    text-align: left; /* Align text to the left */
 }
 
 /* Focus state for input and select elements */
@@ -297,6 +299,10 @@ tbody tr:nth-child(even) {
 /* Add styles for the mortgage calculator */
 #mortgage-calculator {
     margin-top: 20px;
+    padding: 20px;
+    background-color: #f1f8f4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
 #mortgage-calculator h1 {
@@ -306,17 +312,24 @@ tbody tr:nth-child(even) {
 #mortgage-calculator form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 15px;
+    align-items: flex-start;
 }
 
 #mortgage-calculator label {
-    margin: 10px 0 5px;
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
 }
 
 #mortgage-calculator input {
-    width: 200px;
-    padding: 8px;
-    margin-bottom: 15px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
 }
 
 #mortgageResults {
@@ -343,4 +356,22 @@ th, td {
 
 tbody tr:nth-child(even) {
     background-color: #f0f0f0; /* Light grey for alternate rows */
+}
+
+/* Add this CSS to align the loan fields to the left */
+#loanAmount, #interestRate, #loanTerm {
+    text-align: left; /* Align text to the left */
+}
+
+/* Ensure the labels are also aligned to the left */
+label {
+    display: block; /* Make labels block elements */
+    text-align: left; /* Align labels to the left */
+    margin-bottom: 5px; /* Add some space below the label */
+}
+
+/* Align all input fields and their labels to the left */
+input, select {
+    width: 100%; /* Ensure inputs take full width */
+    text-align: left; /* Align text to the left */
 }
