@@ -618,3 +618,51 @@ document.getElementById('calculateMortgageButton').addEventListener('click', fun
     // Show results
     document.getElementById('mortgageResults').style.display = 'block';
 });
+
+// Assuming you have the following input fields in your mortgage calculator
+const loanAmountInput = document.getElementById('loanAmount');
+const interestRateInput = document.getElementById('interestRate');
+const loanTermInput = document.getElementById('loanTerm');
+const calculateMortgageButton = document.getElementById('calculateMortgageButton');
+
+// Function to handle Enter key press
+function handleEnterKey(event, nextElement) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent form submission
+        if (nextElement) {
+            nextElement.focus(); // Move focus to the next input
+        } else {
+            calculateMortgageButton.click(); // Click the calculate button if it's the last input
+        }
+    }
+}
+
+// Add event listeners to each input
+loanAmountInput.addEventListener('keydown', function(event) {
+    handleEnterKey(event, interestRateInput);
+});
+
+interestRateInput.addEventListener('keydown', function(event) {
+    handleEnterKey(event, loanTermInput);
+});
+
+loanTermInput.addEventListener('keydown', function(event) {
+    handleEnterKey(event, null); // No next element, so pass null
+});
+
+// Function to format the loan amount input
+function formatLoanAmount() {
+    const loanAmountInput = document.getElementById('loanAmount');
+    let value = loanAmountInput.value.replace(/,/g, ''); // Remove existing commas
+    if (!isNaN(value) && value.trim() !== '') {
+        loanAmountInput.value = formatNumberWithCommas(parseFloat(value));
+    }
+}
+
+// Event listener for formatting loan amount on blur
+document.getElementById('loanAmount').addEventListener('blur', formatLoanAmount);
+
+// Helper function to format numbers with commas
+function formatNumberWithCommas(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
