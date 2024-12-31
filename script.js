@@ -649,3 +649,9 @@ interestRateInput.addEventListener('keydown', function(event) {
 loanTermInput.addEventListener('keydown', function(event) {
     handleEnterKey(event, null); // No next element, so pass null
 });
+
+document.getElementById('toggleSidebar').addEventListener('click', function() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('collapsed');
+    this.textContent = ' '; // Ensure text remains a single space
+});

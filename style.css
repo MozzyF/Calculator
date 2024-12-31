@@ -13,6 +13,7 @@ body {
     background-color: #f0f0f0;
     color: #333;
     min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* Sidebar styling for navigation */
@@ -21,6 +22,37 @@ body {
     background-color: #f4f4f4;
     padding: 15px;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    transition: width 0.3s ease, padding 0.3s ease; /* Smooth transition for width and padding */
+    position: relative; /* Position relative for absolute positioning of button */
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    overflow: hidden; /* Hide overflow content */
+}
+
+.sidebar.collapsed {
+    width: 20px; /* Reduce width to a small portion */
+    padding: 15px 0; /* Adjust padding to keep button visible */
+}
+
+.sidebar.collapsed h2,
+.sidebar.collapsed a {
+    display: none; /* Hide text when collapsed */
+}
+
+#toggleSidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(46, 125, 50, 0.7); /* Green color with 70% opacity */
+    border: none;
+    cursor: pointer;
+    width: 10px; /* Narrower width */
+    height: 100%; /* Full height of the sidebar */
+    transition: background-color 0.3s ease; /* Only transition background color */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the left side */
+}
+
+#toggleSidebar:hover {
+    background-color: rgba(27, 94, 32, 0.7); /* Darker green on hover with 70% opacity */
 }
 
 /* Sidebar heading styling */
@@ -32,7 +64,7 @@ body {
 /* Sidebar link styling */
 .sidebar a {
     display: block;
-    padding: 10px;
+    padding: 10px 15px; /* Consistent padding on each side */
     color: #333;
     text-decoration: none;
     margin-bottom: 5px;
@@ -48,8 +80,11 @@ body {
 .main-content {
     flex-grow: 1;
     padding: 20px;
-    max-width: 1200px; /* Set a maximum width */
-    margin: 0; /* Remove auto-centering */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+}
+
+.sidebar.collapsed + .main-content {
+    margin-left: 20px; /* Adjust margin when sidebar is collapsed */
 }
 
 /* Calculator sections hidden by default */
