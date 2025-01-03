@@ -253,38 +253,36 @@
             </div>
         </div>
         <div id="mortgage-calculator" class="calculator">
-            <div class="container">
-                <h1>Mortgage Amortization Calculator</h1>
-                <form id="mortgageForm">
-                    <label for="loanAmount">Loan Amount (£):</label>
-                    <input type="number" id="loanAmount" name="loanAmount" required>
+            <h1>Mortgage Amortisation Calculator</h1>
+            <form id="mortgageForm">
+                <label for="loanAmount">Loan Amount (£):</label>
+                <input type="number" id="loanAmount" name="loanAmount" required>
 
-                    <label for="interestRate">Annual Interest Rate (%):</label>
-                    <input type="number" id="interestRate" name="interestRate" step="0.01" required>
+                <label for="interestRate">Annual Interest Rate (%):</label>
+                <input type="number" id="interestRate" name="interestRate" step="0.01" required>
 
-                    <label for="loanTerm">Loan Term (Years):</label>
-                    <input type="number" id="loanTerm" name="loanTerm" required>
+                <label for="loanTerm">Loan Term (Years):</label>
+                <input type="number" id="loanTerm" name="loanTerm" required>
 
-                    <button type="button" id="calculateMortgageButton">Calculate</button>
-                </form>
+                <button type="button" id="calculateMortgageButton">Calculate</button>
+            </form>
 
-                <div id="mortgageResults" style="display: none;">
-                    <h2>Amortization Schedule:</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Payment Number</th>
-                                <th>Payment (£)</th>
-                                <th>Principal (£)</th>
-                                <th>Interest (£)</th>
-                                <th>Remaining Balance (£)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="amortizationSchedule">
-                            <!-- Results will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
+            <div id="mortgageResults" style="display: none;">
+                <h2>Amortisation Schedule:</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Payment Number</th>
+                            <th>Payment (£)</th>
+                            <th>Principal (£)</th>
+                            <th>Interest (£)</th>
+                            <th>Remaining Balance (£)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="amortizationSchedule">
+                        <!-- Results will be populated here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -130,30 +130,30 @@ function calculate() {
     const netSalary = taxableIncome - incomeTax - nationalInsurance - studentLoanRepayment;
 
     // Update the results in the HTML
-    document.getElementById('netSalary').textContent = formatCurrency(netSalary);
+    document.getElementById('netSalary').textContent = formatNumberWithCommas(netSalary.toFixed(2));
 
     // Show the breakdown section
     const breakdownSection = document.getElementById('breakdown');
     breakdownSection.style.display = 'block';
 
     // Update the table
-    document.getElementById('annualGross').textContent = formatCurrency(annualSalary);
-    document.getElementById('monthlyGross').textContent = formatCurrency(annualSalary / 12);
-    document.getElementById('weeklyGross').textContent = formatCurrency(annualSalary / 52);
+    document.getElementById('annualGross').textContent = formatNumberWithCommas((annualSalary).toFixed(2));
+    document.getElementById('monthlyGross').textContent = formatNumberWithCommas((annualSalary / 12).toFixed(2));
+    document.getElementById('weeklyGross').textContent = formatNumberWithCommas((annualSalary / 52).toFixed(2));
 
-    document.getElementById('annualTax').textContent = formatCurrency(incomeTax);
-    document.getElementById('monthlyTax').textContent = formatCurrency(incomeTax / 12);
-    document.getElementById('weeklyTax').textContent = formatCurrency(incomeTax / 52);
+    document.getElementById('annualTax').textContent = formatNumberWithCommas((incomeTax).toFixed(2));
+    document.getElementById('monthlyTax').textContent = formatNumberWithCommas((incomeTax / 12).toFixed(2));
+    document.getElementById('weeklyTax').textContent = formatNumberWithCommas((incomeTax / 52).toFixed(2));
 
-    document.getElementById('annualNIC').textContent = formatCurrency(nationalInsurance);
-    document.getElementById('monthlyNIC').textContent = formatCurrency(nationalInsurance / 12);
-    document.getElementById('weeklyNIC').textContent = formatCurrency(nationalInsurance / 52);
+    document.getElementById('annualNIC').textContent = formatNumberWithCommas((nationalInsurance).toFixed(2));
+    document.getElementById('monthlyNIC').textContent = formatNumberWithCommas((nationalInsurance / 12).toFixed(2));
+    document.getElementById('weeklyNIC').textContent = formatNumberWithCommas((nationalInsurance / 52).toFixed(2));
 
     // Conditionally show Pension Contribution row
     if (pensionDeduction > 0) {
-        document.getElementById('annualPension').textContent = formatCurrency(pensionDeduction);
-        document.getElementById('monthlyPension').textContent = formatCurrency(pensionDeduction / 12);
-        document.getElementById('weeklyPension').textContent = formatCurrency(pensionDeduction / 52);
+        document.getElementById('annualPension').textContent = formatNumberWithCommas((pensionDeduction).toFixed(2));
+        document.getElementById('monthlyPension').textContent = formatNumberWithCommas((pensionDeduction / 12).toFixed(2));
+        document.getElementById('weeklyPension').textContent = formatNumberWithCommas((pensionDeduction / 52).toFixed(2));
         document.querySelector('tr:has(#annualPension)').style.display = 'table-row';
     } else {
         document.querySelector('tr:has(#annualPension)').style.display = 'none';
@@ -161,18 +161,18 @@ function calculate() {
 
     // Conditionally show Student Loan Repayment row
     if (studentLoanRepayment > 0) {
-        document.getElementById('annualStudentLoan').textContent = formatCurrency(studentLoanRepayment);
-        document.getElementById('monthlyStudentLoan').textContent = formatCurrency(studentLoanRepayment / 12);
-        document.getElementById('weeklyStudentLoan').textContent = formatCurrency(studentLoanRepayment / 52);
+        document.getElementById('annualStudentLoan').textContent = formatNumberWithCommas((studentLoanRepayment).toFixed(2));
+        document.getElementById('monthlyStudentLoan').textContent = formatNumberWithCommas((studentLoanRepayment / 12).toFixed(2));
+        document.getElementById('weeklyStudentLoan').textContent = formatNumberWithCommas((studentLoanRepayment / 52).toFixed(2));
         document.getElementById('selectedPlan').textContent = studentLoanPlan;
         document.querySelector('tr:has(#annualStudentLoan)').style.display = 'table-row';
     } else {
         document.querySelector('tr:has(#annualStudentLoan)').style.display = 'none';
     }
 
-    document.getElementById('annualNet').textContent = formatCurrency(netSalary);
-    document.getElementById('monthlyNet').textContent = formatCurrency(netSalary / 12);
-    document.getElementById('weeklyNet').textContent = formatCurrency(netSalary / 52);
+    document.getElementById('annualNet').textContent = formatNumberWithCommas((netSalary).toFixed(2));
+    document.getElementById('monthlyNet').textContent = formatNumberWithCommas((netSalary / 12).toFixed(2));
+    document.getElementById('weeklyNet').textContent = formatNumberWithCommas((netSalary / 52).toFixed(2));
 
     // Scroll to the breakdown section
     breakdownSection.scrollIntoView({ behavior: 'smooth' });
@@ -528,7 +528,7 @@ document.getElementById('calculateButton').addEventListener('click', function() 
     const netSalary = calculateNetSalary(salary);
 
     // Update the main calculator results
-    document.getElementById('netSalary').textContent = netSalary.toFixed(2);
+    document.getElementById('netSalary').textContent = formatNumberWithCommas(netSalary.toFixed(2));
     // Show other results as needed
 });
 
@@ -609,10 +609,10 @@ document.getElementById('calculateMortgageButton').addEventListener('click', fun
         // Create a new row for the amortization schedule
         const row = amortizationSchedule.insertRow();
         row.insertCell(0).textContent = i; // Payment Number
-        row.insertCell(1).textContent = monthlyPayment.toFixed(2); // Payment
-        row.insertCell(2).textContent = principalPayment.toFixed(2); // Principal
-        row.insertCell(3).textContent = interestPayment.toFixed(2); // Interest
-        row.insertCell(4).textContent = remainingBalance.toFixed(2); // Remaining Balance
+        row.insertCell(1).textContent = formatNumberWithCommas(monthlyPayment.toFixed(2)); // Payment
+        row.insertCell(2).textContent = formatNumberWithCommas(principalPayment.toFixed(2)); // Principal
+        row.insertCell(3).textContent = formatNumberWithCommas(interestPayment.toFixed(2)); // Interest
+        row.insertCell(4).textContent = formatNumberWithCommas(remainingBalance.toFixed(2)); // Remaining Balance
     }
 
     // Show results
