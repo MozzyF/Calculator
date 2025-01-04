@@ -5,15 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UK Salary Calculator</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="sidebar">
         <button id="toggleSidebar"> </button>
         <h2>Navigation</h2>
-        <a href="#" onclick="showCalculator('uk-salary-calculator')" id="uk-salary-link">UK Salary Calculator</a>
-        <a href="#" onclick="showCalculator('extra-salary-calculator')" id="extra-salary-link">Extra Gross Salary Calculator</a>
-        <a href="#" onclick="showCalculator('compare-salary-calculator')" id="compare-salary-link">Compare Two Salaries</a>
-        <a href="#" onclick="showCalculator('mortgage-calculator')" id="mortgage-link">Mortgage Calculator</a> <!-- New Link -->
+        <a href="#" onclick="showCalculator('uk-salary-calculator')" id="uk-salary-link">
+            <i class="fas fa-calculator"></i> UK Salary Calculator
+        </a>
+        <a href="#" onclick="showCalculator('extra-salary-calculator')" id="extra-salary-link">
+            <i class="fas fa-plus-circle"></i> Extra Gross Salary Calculator
+        </a>
+        <a href="#" onclick="showCalculator('compare-salary-calculator')" id="compare-salary-link">
+            <i class="fas fa-balance-scale"></i> Compare Two Salaries
+        </a>
+        <a href="#" onclick="showCalculator('mortgage-calculator')" id="mortgage-link">
+            <i class="fas fa-home"></i> Mortgage Calculator
+        </a>
     </div>
     <div class="main-content">
         <div id="uk-salary-calculator" class="calculator active">

@@ -63,8 +63,9 @@ body {
 
 /* Sidebar link styling */
 .sidebar a {
-    display: block;
-    padding: 10px 15px; /* Consistent padding on each side */
+    display: flex;
+    align-items: center; /* Align icons and text vertically */
+    padding: 10px 15px; /* Consistent padding */
     color: #333;
     text-decoration: none;
     margin-bottom: 5px;
@@ -417,4 +418,18 @@ label {
 input, select {
     width: 100%; /* Ensure inputs take full width */
     text-align: left; /* Align text to the left */
+}
+
+.sidebar a i {
+    margin-right: 10px; /* Space between icon and text */
+    font-size: 1.2em; /* Adjust icon size */
+    vertical-align: middle; /* Align icon with text */
+}
+
+.sidebar.collapsed a {
+    justify-content: center; /* Center icons when collapsed */
+}
+
+.sidebar.collapsed a i {
+    margin-right: 0; /* Remove space when collapsed */
 }
