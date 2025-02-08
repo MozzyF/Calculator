@@ -433,3 +433,66 @@ input, select {
 .sidebar.collapsed a i {
     margin-right: 0; /* Remove space when collapsed */
 }
+
+#savings-goal-calculator {
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#savings-goal-calculator h1 {
+    text-align: left;
+    font-size: 2rem;
+    color: #2e7d32;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#savingsForm label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
+
+#savingsForm input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+#savingsForm button {
+    background-color: #00796b; /* Teal button */
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#savingsForm button:hover {
+    background-color: #004d40; /* Darker teal on hover */
+    transform: translateY(-2px);
+}
+
+#savingsResults {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+}

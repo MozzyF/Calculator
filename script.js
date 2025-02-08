@@ -655,3 +655,32 @@ document.getElementById('toggleSidebar').addEventListener('click', function() {
     sidebar.classList.toggle('collapsed');
     this.textContent = ' '; // Ensure text remains a single space
 });
+
+// Function to calculate the number of months needed to reach a savings goal
+function calculateSavingsGoal() {
+    const goalAmount = parseFloat(document.getElementById('goalAmount').value);
+    const currentSavings = parseFloat(document.getElementById('currentSavings').value);
+    const monthlyContribution = parseFloat(document.getElementById('monthlyContribution').value);
+    const annualInterestRate = parseFloat(document.getElementById('savingsInterestRate').value) / 100;
+
+    if (isNaN(goalAmount) || isNaN(currentSavings) || isNaN(monthlyContribution) || isNaN(annualInterestRate)) {
+        alert('Please enter valid numbers for all fields.');
+        return;
+    }
+
+    let monthsNeeded = 0;
+    let totalSavings = currentSavings;
+    const monthlyInterestRate = annualInterestRate / 12;
+
+    while (totalSavings < goalAmount) {
+        totalSavings += monthlyContribution;
+        totalSavings += totalSavings * monthlyInterestRate;
+        monthsNeeded++;
+    }
+
+    document.getElementById('monthsNeeded').textContent = monthsNeeded;
+    document.getElementById('savingsResults').style.display = 'block';
+}
+
+// Event listener for the Savings Goal Calculator button
+document.getElementById('calculateSavingsButton').addEventListener('click', calculateSavingsGoal);
