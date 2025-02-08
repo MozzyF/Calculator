@@ -87,8 +87,10 @@ function formatNumberWithCommas(value) {
 
 // Main Calculation Logic
 function calculate() {
-    const salaryInput = document.getElementById('salary').value.replace(/,/g, '');
-    const salary = parseFloat(salaryInput);
+    const salaryInputElement = document.getElementById('salary');
+    const rawSalaryValue = salaryInputElement.value.replace(/,/g, '').trim(); // Remove commas and trim whitespace
+    console.log('Parsed Salary Input:', rawSalaryValue); // Debugging line
+    const salary = parseFloat(rawSalaryValue);
 
     if (isNaN(salary)) {
         alert("Please enter a valid salary.");
@@ -175,6 +177,9 @@ function calculate() {
 
     // Scroll to the breakdown section
     breakdownSection.scrollIntoView({ behavior: 'smooth' });
+
+    // Do not reformat the input field with commas
+    // salaryInputElement.value = formatNumberWithCommas(salary);
 }
 
 // Function to update pension contribution label and input fields
@@ -212,7 +217,10 @@ function updatePensionFields() {
 document.addEventListener('DOMContentLoaded', function() {
     const calculateButton = document.getElementById('calculateButton');
     if (calculateButton) {
-        calculateButton.addEventListener('click', calculate);
+        calculateButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default action
+            calculate(); // Call the calculate function
+        });
         console.log("Event listener added to calculate button"); // Debugging line
     } else {
         console.error("Calculate button not found"); // Debugging line
@@ -232,14 +240,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('salary').addEventListener('blur', function(event) {
         let value = event.target.value.replace(/,/g, '');
         if (!isNaN(value) && value.trim() !== '') {
-            event.target.value = formatNumberWithCommas(parseFloat(value));
+            // Do not format the value with commas
+            event.target.value = value;
         }
     });
 
-    // Allow numbers and a single decimal point
+    // Allow any number of digits, optional commas, and a single decimal point
     document.getElementById('salary').addEventListener('input', function(event) {
         const value = event.target.value;
-        if (!/^\d*\.?\d*$/.test(value)) {
+        // Allow any number of digits, optional commas, and a single decimal point
+        if (!/^\d{1,3}(,\d{3})*(\.\d*)?$/.test(value) && !/^\d+(\.\d*)?$/.test(value)) {
             event.target.value = value.slice(0, -1);
         }
     });
@@ -254,8 +264,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listener for the form submission
     document.getElementById('salaryForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        calculate();
+        event.preventDefault(); // Prevent form submission
+        calculate(); // Call the calculate function
     });
 });
 
@@ -453,14 +463,24 @@ function showCalculator(id) {
     calculators.forEach(calculator => {
         calculator.classList.remove('active');
     });
-    document.getElementById(id).classList.add('active');
+    const calculatorElement = document.getElementById(id);
+    if (calculatorElement) {
+        calculatorElement.classList.add('active');
+    } else {
+        console.error(`Calculator with ID '${id}' not found.`);
+    }
 
     // Update active link
     const links = document.querySelectorAll('.sidebar a');
     links.forEach(link => {
         link.classList.remove('active');
     });
-    document.querySelector(`#${id}-link`).classList.add('active');
+    const linkElement = document.querySelector(`#${id.replace('-calculator', '')}-link`);
+    if (linkElement) {
+        linkElement.classList.add('active');
+    } else {
+        console.error(`Link with ID '${id.replace('-calculator', '')}-link' not found.`);
+    }
 }
 
 // Centralized function to calculate income tax
