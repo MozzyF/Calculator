@@ -33,7 +33,7 @@
                 <h1>UK Salary Calculator</h1>
                 <form id="salaryForm">
                     <label for="salary">Gross Salary (£):</label>
-                    <input type="text" id="salary" name="salary" required>
+                    <input type="number" id="salary" name="salary" step="0.01" required>
 
                     <label for="frequency">Payment Frequency:</label>
                     <select id="frequency" name="frequency">
@@ -301,13 +301,13 @@
             <h1>Savings Goal Calculator</h1>
             <form id="savingsForm">
                 <label for="goalAmount">Savings Goal (£):</label>
-                <input type="number" id="goalAmount" name="goalAmount" required>
+                <input type="number" id="goalAmount" name="goalAmount" step="0.01" required>
 
                 <label for="currentSavings">Current Savings (£):</label>
-                <input type="number" id="currentSavings" name="currentSavings" required>
+                <input type="number" id="currentSavings" name="currentSavings" step="0.01" required>
 
                 <label for="monthlyContribution">Monthly Contribution (£):</label>
-                <input type="number" id="monthlyContribution" name="monthlyContribution" required>
+                <input type="number" id="monthlyContribution" name="monthlyContribution" step="0.01" required>
 
                 <label for="interestRate">Annual Interest Rate (%):</label>
                 <input type="number" id="savingsInterestRate" name="savingsInterestRate" step="0.01" required>

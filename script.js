@@ -87,10 +87,9 @@ function formatNumberWithCommas(value) {
 
 // Main Calculation Logic
 function calculate() {
-    console.log("Calculate function called"); // Debugging line
-
     const salaryInput = document.getElementById('salary').value.replace(/,/g, '');
     const salary = parseFloat(salaryInput);
+
     if (isNaN(salary)) {
         alert("Please enter a valid salary.");
         return;
@@ -237,9 +236,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Ensure the input is not cleared unless it's truly invalid
+    // Allow numbers and a single decimal point
     document.getElementById('salary').addEventListener('input', function(event) {
-        event.target.value = event.target.value.replace(/[^0-9,]/g, '');
+        const value = event.target.value;
+        if (!/^\d*\.?\d*$/.test(value)) {
+            event.target.value = value.slice(0, -1);
+        }
     });
 
     // Event listener for handling "Enter" key press
