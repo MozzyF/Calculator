@@ -130,6 +130,36 @@ function calculate() {
     const studentLoanRepayment = calculateStudentLoanRepayment(taxableIncome, studentLoanPlan);
     const netSalary = taxableIncome - incomeTax - nationalInsurance - studentLoanRepayment;
 
+    // Clear existing rows
+    const tableBody = document.querySelector('#resultsTable tbody');
+    tableBody.innerHTML = '';
+
+    // Add rows to the table
+    addRow('Gross Salary', annualSalary, annualSalary / 12, annualSalary / 52);
+    addRow('Income Tax', incomeTax, incomeTax / 12, incomeTax / 52);
+    addRow('National Insurance', nationalInsurance, nationalInsurance / 12, nationalInsurance / 52);
+
+    if (pensionDeduction > 0) {
+        addRow('Pension Contribution', pensionDeduction, pensionDeduction / 12, pensionDeduction / 52);
+    }
+
+    if (studentLoanRepayment > 0) {
+        addRow(`Student Loan Repayment (Plan: ${studentLoanPlan})`, studentLoanRepayment, studentLoanRepayment / 12, studentLoanRepayment / 52);
+    }
+
+    addRow('Net Salary', netSalary, netSalary / 12, netSalary / 52);
+
+    // Function to add a row
+    function addRow(label, annual, monthly, weekly) {
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+            <td>${label}</td>
+            <td>${formatNumberWithCommas(annual.toFixed(2))}</td>
+            <td>${formatNumberWithCommas(monthly.toFixed(2))}</td>
+            <td>${formatNumberWithCommas(weekly.toFixed(2))}</td>
+        `;
+    }
+
     // Update the results in the HTML
     document.getElementById('netSalary').textContent = formatNumberWithCommas(netSalary.toFixed(2));
 
@@ -266,6 +296,20 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('salaryForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent form submission
         calculate(); // Call the calculate function
+    });
+
+    document.getElementById('pensionPercent').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent form submission
+            calculate(); // Call the calculate function
+        }
+    });
+
+    document.getElementById('pensionFlatAmount').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent form submission
+            calculate(); // Call the calculate function
+        }
     });
 });
 

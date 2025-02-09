@@ -64,17 +64,19 @@ body {
 /* Sidebar link styling */
 .sidebar a {
     display: flex;
-    align-items: center; /* Align icons and text vertically */
-    padding: 10px 15px; /* Consistent padding */
+    align-items: center;
+    padding: 10px; /* Adjust padding */
     color: #333;
     text-decoration: none;
     margin-bottom: 5px;
-    border-radius: 4px; /* Consistent rounded corners */
+    border-radius: 4px;
+    width: calc(100% - 20px); /* Ensure it fits within the sidebar */
+    box-sizing: border-box;
 }
 
 /* Hover and active state for sidebar links */
 .sidebar a:hover, .sidebar a.active {
-    background-color: #ddd;
+    background-color: #ccc; /* Slightly darker for better contrast */
 }
 
 /* Main content area styling */
@@ -130,7 +132,8 @@ h2, h3 {
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px; /* Consistent gap between form elements */
+    align-items: flex-start;
     padding: 20px; /* Padding around the entire form */
     background-color: #f1f8f4; /* Very light green */
     border-radius: 8px;
@@ -145,14 +148,16 @@ label, p {
 
 /* Input and select element styling */
 input, select {
+    width: 100%;
     padding: 12px;
+    margin-bottom: 10px; /* Consistent margin below each input */
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
     background-color: #fff;
     transition: border-color 0.3s ease;
-    width: 100%; /* Ensure inputs take full width */
-    text-align: left; /* Align text to the left */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    height: 40px; /* Consistent height for all input fields */
 }
 
 /* Focus state for input and select elements */
@@ -213,8 +218,12 @@ th, td {
 }
 
 /* Table row styling for alternate rows */
+tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* White for odd rows */
+}
+
 tbody tr:nth-child(even) {
-    background-color: #f0f0f0; /* Light grey for alternate rows */
+    background-color: #f0f0f0; /* Light grey for even rows */
 }
 
 /* Responsive design adjustments */
@@ -356,7 +365,7 @@ tbody tr:nth-child(even) {
 #mortgage-calculator form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px; /* Match the gap to the Savings Goal Calculator */
     align-items: flex-start; /* Align items to the left */
 }
 
@@ -369,6 +378,7 @@ tbody tr:nth-child(even) {
 #mortgage-calculator input {
     width: 100%;
     padding: 12px;
+    margin-bottom: 10px; /* Match the margin below inputs to the Savings Goal Calculator */
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
@@ -409,9 +419,12 @@ tbody tr:nth-child(even) {
 
 /* Ensure the labels are also aligned to the left */
 label {
-    display: block; /* Make labels block elements */
-    text-align: left; /* Align labels to the left */
-    margin-bottom: 5px; /* Add some space below the label */
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
 }
 
 /* Align all input fields and their labels to the left */
@@ -440,7 +453,7 @@ input, select {
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Space between sections */
     width: 100%;
     box-sizing: border-box;
 }
@@ -452,6 +465,13 @@ input, select {
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
     margin-bottom: 20px;
+}
+
+#savingsForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Reduce the gap between form elements */
+    align-items: flex-start;
 }
 
 #savingsForm label {
@@ -466,7 +486,7 @@ input, select {
 #savingsForm input {
     width: 100%;
     padding: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Reduce the margin below each input */
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
@@ -495,4 +515,19 @@ input, select {
     padding: 20px;
     background-color: #e9ecef;
     border-radius: 8px;
+}
+
+/* Specific styling for loan amount input to match others */
+#loanAmount {
+    margin-bottom: 10px; /* Ensure consistent margin */
+}
+
+select {
+    font-size: 1rem;
+    padding: 10px; /* Adjust padding for better text visibility */
+    line-height: 1.5; /* Ensure sufficient line height */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
 }
