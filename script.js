@@ -719,7 +719,15 @@ loanTermInput.addEventListener('keydown', function(event) {
 document.getElementById('toggleSidebar').addEventListener('click', function() {
     const sidebar = document.querySelector('.sidebar');
     sidebar.classList.toggle('collapsed');
-    this.textContent = ' '; // Ensure text remains a single space
+
+    // Swap the icon when collapsed vs. expanded
+    if (sidebar.classList.contains('collapsed')) {
+        // Show the "chevron-right" icon if it's collapsed
+        this.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    } else {
+        // Show the "chevron-left" icon if it's expanded
+        this.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    }
 });
 
 // Function to calculate the number of months needed to reach a savings goal

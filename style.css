@@ -49,6 +49,9 @@ body {
     height: 100%; /* Full height of the sidebar */
     transition: background-color 0.3s ease; /* Only transition background color */
     border-radius: 0 5px 5px 0; /* Rounded corners on the left side */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #toggleSidebar:hover {
