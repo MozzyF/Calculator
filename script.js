@@ -21,8 +21,26 @@ const STUDENT_LOAN_THRESHOLDS = {
 
 const STUDENT_LOAN_RATE = 0.09; // Fixed repayment rate for all plans
 
+// Define tax bands for each year
+const TAX_BANDS_BY_YEAR = {
+    "2024/25": [
+        { limit: 12570, rate: 0 },
+        { limit: 50270, rate: 0.20 },
+        { limit: 150000, rate: 0.40 },
+        { limit: Infinity, rate: 0.45 }
+    ],
+    "2023/24": [
+        { limit: 12570, rate: 0 },
+        { limit: 50270, rate: 0.20 },
+        { limit: 150000, rate: 0.40 },
+        { limit: Infinity, rate: 0.45 }
+    ],
+    // Add more years as needed
+};
+
 // Helper Functions
-function calculateIncomeTax(grossSalary) {
+function calculateIncomeTax(grossSalary, taxYear) {
+    const taxBands = TAX_BANDS_BY_YEAR[taxYear];
     let personalAllowance = 12570;
     const allowanceReductionThreshold = 100000;
     const allowanceReductionLimit = 125140;
@@ -38,16 +56,13 @@ function calculateIncomeTax(grossSalary) {
     let incomeTax = 0;
 
     if (taxableIncome > 0) {
-        // Basic Rate
-        const basicRateLimit = 37700;
-        const basicRateTax = Math.min(taxableIncome, basicRateLimit) * 0.2;
-        incomeTax += basicRateTax;
-
-        // Higher Rate
-        if (taxableIncome > basicRateLimit) {
-            const higherRateLimit = 150000;
-            const higherRateTax = Math.min(taxableIncome - basicRateLimit, higherRateLimit - basicRateLimit) * 0.4;
-            incomeTax += higherRateTax;
+        for (let i = 0; i < taxBands.length; i++) {
+            const band = taxBands[i];
+            const previousLimit = i === 0 ? 0 : taxBands[i - 1].limit;
+            const taxableAmount = Math.min(taxableIncome, band.limit - previousLimit);
+            incomeTax += taxableAmount * band.rate;
+            taxableIncome -= taxableAmount;
+            if (taxableIncome <= 0) break;
         }
     }
 
@@ -108,6 +123,7 @@ function calculate() {
         annualSalary *= 2080; // Assume 40-hour workweek and 52 weeks/year
     }
 
+    const taxYear = document.getElementById('taxYear').value;
     const pensionType = document.getElementById('pensionType').value;
     const pensionPercent = parseFloat(document.getElementById('pensionPercent').value) || 0;
     const pensionFlatAmount = parseFloat(document.getElementById('pensionFlatAmount').value) || 0;
@@ -124,7 +140,7 @@ function calculate() {
     }
 
     const taxableIncome = annualSalary - pensionDeduction;
-    const incomeTax = calculateIncomeTax(taxableIncome);
+    const incomeTax = calculateIncomeTax(taxableIncome, taxYear);
     const nationalInsurance = calculateNIC(taxableIncome);
     const studentLoanPlan = document.getElementById('studentLoan').value;
     const studentLoanRepayment = calculateStudentLoanRepayment(taxableIncome, studentLoanPlan);
